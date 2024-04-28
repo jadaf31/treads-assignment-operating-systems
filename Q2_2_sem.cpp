@@ -17,14 +17,21 @@ void runMeSecond()
     sem_wait(&sem);
     cout << "Run me second\n";
 }
+void runMeThird()
+{
+    sem_wait(&sem);
+    cout << "Run me third\n";
+}
 int main()
 {
-    const int num_threads = 2;
+    const int num_threads = 3;
     // initialize the semaphore with the number of threads
-    sem_init(&sem, 0, 1); // 0: thread, 1: process
+    sem_init(&sem, 0, 2); // 0: thread, 1; process
     thread threads[num_threads];
     threads[0] = thread(runMeFirst);
     threads[1] = thread(runMeSecond);
+    threads[2] = thread(runMeThird);
+
     for (int i = 0; i < num_threads; ++i)
     {
         threads[i].join();
